@@ -29,11 +29,11 @@
 
 <script type="text/javascript">
 	// 검색 | page 두가지 경우 모두 Form 전송 위해 JavaScript 이용
-	function fncGetProductList(currentPage) {
+	function fncGetUserList(currentPage) {
 		//document.getElementById("currentPage").value = currentPage;
 		$("#currentPage").val(currentPage)
 		//document.detailForm.submit();
-		$("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
+		$("form").attr("method" , "POST").attr("action" , "/product/listProduct?menu=${menu}").submit();
 	}
 
 	//==> 추가된부분 : "검색" ,  prodName link  Event 연결 및 처리
@@ -51,15 +51,15 @@
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		//==> 3 과 1 방법 조합 : $(".className tagName:filter함수") 사용함.
 		$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
+				var prodNo = $(this).data("param");
 				//Debug..
 				//alert(  $( this ).text().trim() );
-				self.location ="/product/updateProductView?prodNo="+$(this).text().trim();
-		});
-		
-		$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
-				//Debug..
-				//alert(  $( this ).text().trim() );
-				self.location ="/product/readProduct?prodNo="+$(this).text().trim();
+				if(${param.menu == 'manage'}) {
+					self.location ="/product/updateProductView?prodNo="+prodNo+"&menu=manage";
+				}else {
+					self.location ="/product/readProduct?prodNo="+prodNo+"&menu=search";
+				}
+				
 		});
 		
 		//==> UI 수정 추가부분  :  userId LINK Event End User 에게 보일수 있도록 
@@ -83,7 +83,7 @@
 
 <body bgcolor="#ffffff" text="#000000">
 <div style="width:98%; margin-left:10px;">
-<form name="detailForm" action="/product/listProduct" method="post">
+<form name="detailForm">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -219,17 +219,10 @@
 		<tr class="ct_list_pop">
 			<td align="center">${ i }</td>
 			<td></td>
-			<td align="left">
-				<c:if test="${param.menu == 'manage'}">
+			<td align="left" data-param="${product.prodNo}">
 					<!-- <a href="/product/updateProductView?prodNo=${product.prodNo}">${product.prodName}</a> -->
 					${product.prodName}
-				</c:if>					
-				
-				<c:if test="${param.menu == 'search'}">
 					<!-- <a href="/product/readProduct?prodNo=${product.prodNo}">${product.prodName}</a> -->
-					${product.prodName}
-				</c:if>	
-					
 			<%-- if(menu.equals("manage")) {%>
 				<a href="/updateProductView.do?prodNo=${user.userId}%></a>
 			<% } else { %>

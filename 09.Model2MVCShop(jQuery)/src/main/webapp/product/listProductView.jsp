@@ -45,7 +45,7 @@
 		 $( "td.ct_btn01:contains('검색')" ).on("click" , function() {
 			//Debug..
 			//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
-			fncGetProductList(1);
+			fncGetUserList(1);
 		});
 		
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)

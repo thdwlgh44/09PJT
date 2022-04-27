@@ -23,35 +23,11 @@ Product vo = (Product)request.getAttribute("vo");
 
 function fncUpdateProduct(){
 	
-	// Form 유효성 검증
-	//var name=document.detailForm.userName.value;
-	var name=$("input[name='prodName']").val();
-	
-	if(name == null || name.length <1){
-		alert("상품은  반드시 입력하셔야 합니다.");
-		return;
-	}
-		
-	//if(document.detailForm.phone2.value != "" && document.detailForm.phone2.value != "") {
-	//	document.detailForm.phone.value = document.detailForm.phone1.value + "-" + document.detailForm.phone2.value + "-" + document.detailForm.phone3.value;
-	//} else {
-	//	document.detailForm.phone.value = "";
-	//}
-	
-	var value = "";	
-	if( $("input[name='phone2']").val() != ""  &&  $("input[name='phone3']").val() != "") {
-		var value = $("option:selected").val() + "-" 
-							+ $("input[name='phone2']").val() + "-" 
-							+ $("input[name='phone3']").val();
-	}
-	
-	//Debug...
-	//alert("phone : "+value);
-	$("input:hidden[name='phone']").val( value );
 	
 	//document.detailForm.action='/product/updateProduct';
 	//document.detailForm.submit();
 	$("form").attr("method" , "POST").attr("action" , "/product/updateProduct").submit();
+	}
 	
 	//==> 추가된부분 : "수정"  Event 연결
 	 $(function() {
@@ -62,7 +38,7 @@ function fncUpdateProduct(){
 			//alert(  $( "td.ct_btn01:contains('수정')" ).html() );
 			fncUpdateProduct();
 		});
-	});
+	 });
 	
 
 	/*============= jQuery 변경 주석처리 =============
@@ -79,13 +55,13 @@ function fncUpdateProduct(){
 				history.go(-1);
 			});
 		});
-	}
+	
 </script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="detailForm" method="post">
+<form name="detailForm">
 
 <input type="hidden" name="prodNo" value="${product.prodNo}">
 
